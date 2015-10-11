@@ -1,0 +1,16 @@
+ConvertMaps.exe - map converter
+
+Usage:
+
+ConvertMaps.exe mapfile (max_size)
+
+mapfile - maps downloaded from above website
+max_size - (optional) set the maximum number of map size.
+           if the map is bigger than do not convert.
+
+Output file will remove .map extension and replace with map size and .txt extension.
+
+Ex: ConvertMaps.exe Aftershock.map
+
+Output file is Aftershock_512.txt
+
