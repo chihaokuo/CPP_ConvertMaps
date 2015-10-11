@@ -1,6 +1,6 @@
 // Author: Chi-Hao Kuo
 // Created: 10/7/2015
-// Updated: 10/9/2015
+// Updated: 10/10/2015
 
 // map converter implementation
 // load map files from http://www.movingai.com/benchmarks/
@@ -28,6 +28,9 @@ unsigned int MapConverter::GetMapSize(void)
 	{
 		// get tokens from 2nd line (height #number)
 		std::vector<std::string> tokens = StringUtility::SimpleTokenizer(strlist_[1], ' ');
+		if (tokens.size() <= 1)
+			throw std::invalid_argument("Wrong file format");
+
 		int height = std::stoi(tokens[1]);
 		// get tokens from 3nd line (width #number)
 		tokens = StringUtility::SimpleTokenizer(strlist_[2], ' ');
@@ -38,6 +41,14 @@ unsigned int MapConverter::GetMapSize(void)
 	catch (const std::invalid_argument& ia)
 	{
 		std::cerr << "Invalid argument: " << ia.what() << '\n';
+		has_exception_ = true;
+
+		return 0;
+	}
+	catch (const std::out_of_range& oor)
+	{
+		std::cerr << "Out of range: " << oor.what() << '\n';
+		has_exception_ = true;
 
 		return 0;
 	}
@@ -153,7 +164,14 @@ void MapConverter::ProcessFile(const char *filename)
 
 	LoadFile(filename);
 
+	if (!is_loaded_)
+		return;
+
 	mapsize_ = GetMapSize();
+
+	// catch exception in GetMapSize(), std::stoi()
+	if (has_exception_)
+		return;
 
 	if (IsMapGoodSize())
 	{
@@ -162,7 +180,5 @@ void MapConverter::ProcessFile(const char *filename)
 		SaveFile(filename_.c_str());
 	}
 	else
-	{
 		printf("Map too large.\n");
-	}
 }

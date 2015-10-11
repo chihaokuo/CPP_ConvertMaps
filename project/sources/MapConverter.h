@@ -1,6 +1,6 @@
 // Author: Chi-Hao Kuo
 // Created: 10/7/2015
-// Updated: 10/9/2015
+// Updated: 10/10/2015
 
 // map converter declaration
 // load map files from http://www.movingai.com/benchmarks/
@@ -12,12 +12,13 @@
 class MapConverter : public FileProcessor
 {
 private:
-	unsigned int max_convert_size_;
-	unsigned int mapsize_;
+	unsigned int max_convert_size_;		// max map size to convert
+	unsigned int mapsize_;				// real map size
+	bool has_exception_;				// flag: if there's exception, set to true
 
 public:
 	// constructor
-	MapConverter() : max_convert_size_(0), mapsize_(0) {}
+	MapConverter() : max_convert_size_(0), mapsize_(0), has_exception_(false) {}
 	// destructor
 	~MapConverter() {}
 
