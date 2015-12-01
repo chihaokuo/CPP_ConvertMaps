@@ -1,8 +1,38 @@
 // Author: Chi-Hao Kuo
 // Created: 10/7/2015
-// Updated: 10/9/2015
+// Updated: 12/1/2015
 
 // string utility library implementation
+
+/******************************************************************************
+Assumption:
+
+I would like to convert map files from Pathfinding Benchmarks at Moving AI Lab 
+to the format that can be used for pathfinding project in Game AI course. So
+this utility deals with tokenizing the string into several substrings, and 
+replacing characters for string. But I also want to make the utility more
+general so I can reuse it for other tasks.
+
+The input map is a text file which the first few lines contains the map
+information. The map itself has terrain, out of bounds, tree, swamp and water.
+The output file format has the first line as map width and height, and there
+are only terrain and wall for the map.
+
+Goal for the tool:
+
+1. Tokenize a given string to get substring I want (such as width/height).
+2. Replace one or more characters to one other character (map multiple to one).
+3. To make it more general. Make it to support character replacement and string
+   replacement.
+   
+Approach:
+
+The task is divided into 3 parts -
+1. Separate string into words.
+2. Find character or word in a string.
+3. Replace character or word in a string.
+4. For future use, have a helper function to make character uppercase or lowercase.
+******************************************************************************/
 
 #include "StringUtility.h"
 
@@ -170,7 +200,6 @@ namespace StringUtility
 		}
 	}
 
-	// find character within a given string from certain index
 	/*--------------------------------------------------------------------------*
 	Name:           SearchChar
 
@@ -313,3 +342,16 @@ namespace StringUtility
 		}
 	}
 }
+
+/******************************************************************************
+Unit tests:
+
+1. Input: "", separate character: 1  =>  Output: ""
+2. Input: "abcde1fghij", separate character: 1, uppercase  
+          =>  Output: "ABCDE" and "FGHIJ"
+3. Input: "DigiPen Institute of Technology.", separate character: ' ', lowercase, 
+          replace i to 1  =>  Output: "d1g1pen", "1nst1tute", "technology"
+4. Dragon Age - Origin: compat.map (. to 0, T to 1)
+5. Dragon Age - Origin: den204d.map (. to 0, T and @ to 1)
+6. for entire project, tested all maps less than 256 width and 256 height.
+******************************************************************************/
